@@ -16,5 +16,6 @@ namespace MVCApp.Data
         public DbSet<Department> Department { get; set; }
         public DbSet<Designation> Designation { get; set; }
         public DbSet<Employee> Employee { get; set; }
+        public DbSet<Religion> Religion { get; set; }
     }
 }

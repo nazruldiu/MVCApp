@@ -23,8 +23,10 @@ namespace MVCApp.Controllers
         }
         public IActionResult Create()
         {
-            Designation designation = new Designation();
-            designation.DepartmentList = _db.Department.Select(x=> new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            Designation designation = new Designation
+            {
+                DepartmentList = _db.Department.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList()
+            };
             return View(designation);
         }
         [HttpPost]

@@ -29,6 +29,7 @@ namespace MVCApp
             options.UseSqlServer(Configuration.GetConnectionString("dbConnection")));
 
             services.AddControllersWithViews();
+            services.AddScoped<UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

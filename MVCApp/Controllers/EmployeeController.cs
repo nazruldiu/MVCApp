@@ -29,8 +29,10 @@ namespace MVCApp.Controllers
 
         public IActionResult Create()
         {
-            Employee employee = new Employee();
-            employee.DateofBirth = DateTime.Now;
+            Employee employee = new Employee
+            {
+                DateofBirth = DateTime.Now
+            };
             PopulateDDl(employee);
             return View(employee);
         }
@@ -40,10 +42,9 @@ namespace MVCApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = null;
                 if (model.ImageFile != null)
                 {
-                    uniqueFileName = UploadedFile(model);
+                    string uniqueFileName = UploadedFile(model);
                     model.ImageFileName = uniqueFileName;
                 }
                 _db.Employee.Add(model);
@@ -65,10 +66,8 @@ namespace MVCApp.Controllers
                 string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ImageFile.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    model.ImageFile.CopyTo(fileStream);
-                }
+                using var fileStream = new FileStream(filePath, FileMode.Create);
+                model.ImageFile.CopyTo(fileStream);
             }
             return uniqueFileName;
         }
@@ -92,7 +91,6 @@ namespace MVCApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = null;
                 if (model.ImageFile != null)
                 {
                     if (model.ImageFileName != null)
@@ -100,7 +98,7 @@ namespace MVCApp.Controllers
                         string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images", model.ImageFileName);
                         System.IO.File.Delete(filePath);
                     }
-                    uniqueFileName = UploadedFile(model);
+                    string uniqueFileName = UploadedFile(model);
                     model.ImageFileName = uniqueFileName;
                 }
                 _db.Employee.Update(model);
