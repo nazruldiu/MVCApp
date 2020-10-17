@@ -1,0 +1,89 @@
+﻿@model MVCApp.Models.Employee
+@{
+    ViewData["Title"] = "Delete";
+}
+<form method="post" asp-action="DeletePost">
+    <input asp-for="Id" hidden />
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-info pl-3">Delete Employee</h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="FirstName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input disabled asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="LastName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input disabled asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="DepartmentId"></label>
+                    </div>
+                    <div class="col-8">
+                        <select disabled asp-for="DepartmentId" asp-items="@Model.DepartmentList" class="form-control">
+                            <option value="" selected>--- Select One ---</option>
+                        </select>
+                        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="DesignationId"></label>
+                    </div>
+                    <div class="col-8">
+                        <select disabled asp-for="DesignationId" asp-items="@Model.DesignationList" class="form-control">
+                            <option value="" selected>--- Select One ---</option>
+                        </select>
+                        <span asp-validation-for="DesignationId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="DateofBirth"></label>
+                    </div>
+                    <div class="col-8">
+                        <input disabled asp-for="DateofBirth" class="form-control" type="date" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="ImageFile"></label>
+                    </div>
+                    <div class="col-8">
+                        <img src="~/images/@Model.ImageFileName" class="rounded-circle" height="100" width="100" asp-append-version="true" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="row col-8 offset-4">
+                        <div class="col">
+                            <input type="submit" class="btn btn-danger w-100" value="Delete" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="index" class="btn btn-info w-100">
+                                Back
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+

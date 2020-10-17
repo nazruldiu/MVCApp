@@ -1,0 +1,122 @@
+﻿@model MVCApp.Models.Employee
+@{
+    ViewData["Title"] = "Create";
+}
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+
+    <div class="border p-3 bg-white">
+        <div class="form-group row">
+            <h2 class="text-info pl-3">Add Designation</h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="FirstName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="LastName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="DepartmentId"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="DepartmentId" asp-items="@Model.DepartmentList" class="form-control">
+                            <option value="" selected>--- Select One ---</option>
+                        </select>
+                        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="DesignationId"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="DesignationId" asp-items="@Model.DesignationList" class="form-control">
+                            <option value="" selected>--- Select One ---</option>
+                        </select>
+                        <span asp-validation-for="DesignationId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="DateofBirth"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="DateofBirth" class="form-control" type="date"/>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="ImageFile"></label>
+                    </div>
+                    <div class="col-8">
+                        <div class="custom-file">
+                            <input asp-for="ImageFile" type="file" class="custom-file-input" id="customFile" />
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
+
+                        @*<input asp-for="ImageFileName" type="file">*@
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="row col-8 offset-4">
+                        <div class="col">
+                            <input type="submit" class="btn btn-primary w-100" value="Create" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="index" class="btn btn-info w-100">
+                                Back
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+        <script type="text/javascript">
+
+        // Add the following code if you want the name of the file appear on select
+            $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+            $("#DepartmentId").change(function () {
+                debugger;
+                    var v = $(this).val();
+                    var url = "GetDesignationByDepartmentId"+ '?id=' + v;
+                    $.getJSON(url, function (data) {
+                        $("#DesignationId").empty();
+                        $("#DesignationId")
+                            .append($("<option>").text("--- Select One ---").val(''));
+                        $.each(data,
+                            function (i, item) {
+                                $("#DesignationId")
+                                    .append($("<option>").text(item.text).val(item.value));
+                            });
+                    });
+                });
+        </script>
+
+    }
+}
